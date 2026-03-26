@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOEIC Part 3 — Ôn tập tổng hợp</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#F7F5F0; --card:#fff; --primary:#1A4731; --accent:#4CAF81;
+    --accent-light:#E8F5EE; --text:#1C1C1C; --muted:#6B7280;
+    --border:#E5E2DC; --wrong-bg:#FEF2F2; --wrong:#DC2626;
+    --correct-bg:#F0FDF4; --correct:#16A34A;
+    --radius:14px; --shadow:0 2px 16px rgba(0,0,0,0.07);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:4rem;}
+
+  .site-header{background:var(--primary);padding:1.1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .site-title{font-family:'DM Serif Display',serif;font-size:1.2rem;color:#fff;}
+  .site-title span{color:var(--accent);}
+  .header-stats{display:flex;gap:1.25rem;align-items:center;}
+  .hstat{font-size:0.75rem;color:rgba(255,255,255,0.6);text-align:center;}
+  .hstat strong{display:block;font-size:1rem;font-weight:600;color:#fff;}
+  .hstat strong.g{color:#6EE7A0;} .hstat strong.r{color:#FCA5A5;}
+
+  .progress-wrap{background:var(--primary);padding:0 1.5rem 0.6rem;}
+  .progress-track{height:3px;background:rgba(255,255,255,0.15);border-radius:99px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--accent);border-radius:99px;transition:width 0.4s ease;}
+
+  .container{max-width:720px;margin:0 auto;padding:1.5rem 1.25rem 0;}
+
+  /* FILTER BAR */
+  .filter-bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.25rem;align-items:center;}
+  .filter-bar label{font-size:0.78rem;color:var(--muted);margin-right:2px;}
+  .fbtn{font-family:'DM Sans',sans-serif;font-size:0.78rem;padding:5px 13px;border-radius:99px;border:1.5px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;transition:all 0.18s;font-weight:500;}
+  .fbtn:hover{border-color:var(--accent);color:var(--primary);}
+  .fbtn.active{background:var(--primary);border-color:var(--primary);color:#fff;}
+  .sep{width:1px;height:20px;background:var(--border);margin:0 2px;}
+  .mbtn{font-family:'DM Sans',sans-serif;font-size:0.78rem;padding:5px 13px;border-radius:99px;border:1.5px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;transition:all 0.18s;font-weight:500;}
+  .mbtn:hover{border-color:var(--accent);color:var(--primary);}
+  .mbtn.active{background:#3B6D11;border-color:#3B6D11;color:#fff;}
+
+  .q-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.6rem;margin-bottom:1.1rem;border:1px solid var(--border);animation:slideIn 0.25s ease;}
+  @keyframes slideIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+  .q-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.9rem;}
+  .q-badge{font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);padding:3px 10px;border-radius:99px;}
+  .q-num{font-size:0.76rem;color:var(--muted);font-weight:500;}
+  .q-test-tag{font-size:0.68rem;padding:2px 8px;border-radius:99px;font-weight:600;}
+  .tag-t1{background:#EEF2FF;color:#4338CA;}
+  .tag-t2{background:#FFF7ED;color:#C2410C;}
+  .tag-t3{background:#F0FDF4;color:#16A34A;}
+
+  .q-text{font-size:0.97rem;line-height:1.65;color:var(--text);margin-bottom:1.1rem;}
+
+  .graphic-box{margin:0.6rem 0 1rem;border:1px solid var(--border);border-radius:10px;overflow:hidden;font-size:0.83rem;}
+  .graphic-title{background:var(--primary);color:#fff;padding:6px 13px;font-weight:600;font-size:0.76rem;letter-spacing:0.04em;}
+  .graphic-body{padding:9px 13px;}
+  .graphic-body table{width:100%;border-collapse:collapse;}
+  .graphic-body th{text-align:left;font-weight:600;font-size:0.75rem;color:var(--muted);padding:3px 7px 5px;border-bottom:1px solid var(--border);}
+  .graphic-body td{padding:4px 7px;font-size:0.81rem;color:var(--text);border-bottom:0.5px solid var(--border);}
+  .graphic-body tr:last-child td{border-bottom:none;}
+  .graphic-body .total-row td{font-weight:600;border-top:1.5px solid var(--border);}
+
+  /* Concert seating SVG */
+  .seating-wrap{padding:8px;text-align:center;}
+  .seating-wrap svg{max-width:280px;width:100%;}
+
+  /* Map graphic */
+  .map-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:10px;}
+  .map-cell{border:1px solid var(--border);border-radius:8px;padding:10px 8px;text-align:center;font-size:0.82rem;}
+  .map-cell .site-label{font-size:0.7rem;color:var(--muted);font-weight:600;}
+  .map-cell .site-name{font-weight:500;margin-top:2px;}
+
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .opt{display:flex;align-items:flex-start;gap:10px;padding:10px 13px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all 0.18s;background:#fff;user-select:none;}
+  .opt:hover:not(.locked){border-color:var(--accent);background:var(--accent-light);}
+  .opt.locked{cursor:default;}
+  .opt.correct{border-color:var(--correct);background:var(--correct-bg);}
+  .opt.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+  .opt-key{width:23px;height:23px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.73rem;font-weight:600;flex-shrink:0;color:var(--muted);transition:all 0.18s;margin-top:1px;}
+  .opt:hover:not(.locked) .opt-key{border-color:var(--accent);color:var(--primary);}
+  .opt.correct .opt-key{background:var(--correct);border-color:var(--correct);color:#fff;}
+  .opt.wrong .opt-key{background:var(--wrong);border-color:var(--wrong);color:#fff;}
+  .opt-text{font-size:0.9rem;line-height:1.5;color:var(--text);padding-top:2px;}
+  .opt.correct .opt-text{color:var(--correct);font-weight:500;}
+  .opt.wrong .opt-text{color:var(--wrong);}
+
+  .feedback{margin-top:0.9rem;padding:9px 13px;border-radius:8px;font-size:0.855rem;font-weight:500;display:none;animation:fadeIn 0.2s ease;}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+  .feedback.show{display:block;}
+  .feedback.ok{background:var(--correct-bg);color:var(--correct);border:1px solid #bbf7d0;}
+  .feedback.bad{background:var(--wrong-bg);color:var(--wrong);border:1px solid #fecaca;}
+
+  .actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:2rem;}
+  .action-left{font-size:0.78rem;color:var(--muted);}
+  .btn{font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:600;padding:9px 20px;border-radius:10px;border:none;cursor:pointer;transition:all 0.18s;}
+  .btn:active{transform:scale(0.97);}
+  .btn-ghost{background:transparent;color:var(--muted);border:1.5px solid var(--border);}
+  .btn-ghost:hover{border-color:var(--muted);color:var(--text);}
+  .btn-main{background:var(--primary);color:#fff;}
+  .btn-main:hover{background:#163d27;}
+  .btn-accent{background:var(--accent);color:#fff;}
+  .btn-accent:hover{background:#3a9e6a;}
+
+  #result-area{display:none;animation:slideIn 0.3s ease;}
+  .result-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border);padding:2.5rem 1.5rem;text-align:center;}
+  .score-circle{width:120px;height:120px;border-radius:50%;background:var(--primary);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 1.25rem;}
+  .score-num{font-family:'DM Serif Display',serif;font-size:2rem;color:#fff;line-height:1;}
+  .score-denom{font-size:0.75rem;color:rgba(255,255,255,0.6);margin-top:2px;}
+  .result-title{font-family:'DM Serif Display',serif;font-size:1.5rem;margin-bottom:0.4rem;}
+  .result-msg{font-size:0.88rem;color:var(--muted);margin-bottom:1.75rem;line-height:1.6;}
+  .result-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+  .breakdown{display:flex;gap:0.75rem;justify-content:center;margin-bottom:1.75rem;flex-wrap:wrap;}
+  .bkstat{background:var(--bg);padding:0.65rem 1rem;border-radius:10px;text-align:center;min-width:75px;}
+  .bkstat-num{font-size:1.3rem;font-weight:600;}
+  .bkstat-lbl{font-size:0.7rem;color:var(--muted);margin-top:2px;}
+  .gc{color:var(--correct);} .rc{color:var(--wrong);}
+
+  @media(max-width:500px){
+    .site-header{padding:0.9rem 1rem;}
+    .container{padding:1.1rem 0.9rem 0;}
+    .q-card{padding:1.1rem;}
+    .header-stats{gap:0.9rem;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-title">TOEIC <span>Part 3</span></div>
+  <div class="header-stats">
+    <div class="hstat"><strong id="h-qnum">1/39</strong>câu</div>
+    <div class="hstat"><strong id="h-correct" class="g">0</strong>đúng</div>
+    <div class="hstat"><strong id="h-wrong" class="r">0</strong>sai</div>
+  </div>
+</header>
+<div class="progress-wrap">
+  <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:2.6%"></div></div>
+</div>
+
+<main class="container">
+  <div class="filter-bar">
+    <label>Test:</label>
+    <button class="fbtn active" id="f-all" onclick="setFilter('all')">Tất cả (117)</button>
+    <button class="fbtn" id="f-1"   onclick="setFilter('1')">Test 1</button>
+    <button class="fbtn" id="f-2"   onclick="setFilter('2')">Test 2</button>
+    <button class="fbtn" id="f-3"   onclick="setFilter('3')">Test 3</button>
+    <div class="sep"></div>
+    <button class="mbtn active" id="m-seq"  onclick="setMode('seq')">Thứ tự</button>
+    <button class="mbtn"        id="m-rand" onclick="setMode('rand')">Ngẫu nhiên</button>
+  </div>
+
+  <div id="quiz-area">
+    <div class="q-card" id="q-card">
+      <div class="q-meta">
+        <div style="display:flex;gap:6px;align-items:center;">
+          <span class="q-badge">Part 3</span>
+          <span class="q-test-tag" id="q-tag"></span>
+        </div>
+        <span class="q-num" id="q-num"></span>
+      </div>
+      <div class="q-text" id="q-text"></div>
+      <div id="graphic-area"></div>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback"></div>
+    </div>
+    <div class="actions">
+      <div class="action-left" id="skip-hint">Chưa chắc? Bỏ qua ↓</div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-ghost" id="skip-btn" onclick="nextQ()">Bỏ qua</button>
+        <button class="btn btn-main"  id="next-btn" onclick="nextQ()" style="display:none">Tiếp theo →</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="result-area">
+    <div class="result-card">
+      <div class="score-circle">
+        <div class="score-num" id="r-score">0</div>
+        <div class="score-denom" id="r-total">/39</div>
+      </div>
+      <div class="result-title" id="r-title"></div>
+      <div class="result-msg"   id="r-msg"></div>
+      <div class="breakdown">
+        <div class="bkstat"><div class="bkstat-num gc" id="r-cor">0</div><div class="bkstat-lbl">Đúng</div></div>
+        <div class="bkstat"><div class="bkstat-num rc" id="r-wrg">0</div><div class="bkstat-lbl">Sai</div></div>
+        <div class="bkstat"><div class="bkstat-num"   id="r-pct">0%</div><div class="bkstat-lbl">Tỉ lệ</div></div>
+      </div>
+      <div class="result-btns">
+        <button class="btn btn-ghost"  onclick="reviewWrong()" id="review-btn">Ôn lại câu sai</button>
+        <button class="btn btn-accent" onclick="restart()">Làm lại</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+/* ── GRAPHICS ───────────────────────────────────────── */
+const GFX = {
+  /* TEST 1 */
+  t1_area: `<div class="graphic-box"><div class="graphic-title">🗺️ Car Dealership Areas</div><div class="graphic-body"><table>
+    <tr><th>Area</th><th>Type</th></tr>
+    <tr><td>Area 1</td><td>Electric scooters</td></tr>
+    <tr><td>Area 2</td><td>Electric cars</td></tr>
+    <tr><td>Area 3</td><td>Gasoline cars</td></tr>
+    <tr><td>Area 4</td><td>Vans</td></tr>
+  </table></div></div>`,
+  t1_ticket: `<div class="graphic-box"><div class="graphic-title">🎟️ Ticket Pricing</div><div class="graphic-body"><table>
+    <tr><th>Type</th><th>Discount</th></tr>
+    <tr><td>Regular</td><td>−$10</td></tr>
+    <tr><td>Monday</td><td>−$5</td></tr>
+    <tr><td>After 5 P.M.</td><td>−$3</td></tr>
+    <tr><td>Students & members</td><td>−$2</td></tr>
+  </table></div></div>`,
+  t1_shelby: `<div class="graphic-box"><div class="graphic-title">🛒 Ways to Save at SHELBY's</div><div class="graphic-body"><table>
+    <tr><th>Method</th><th>Savings</th></tr>
+    <tr><td>Purchase with app</td><td>5%</td></tr>
+    <tr><td>Spend $10 or more</td><td>3%</td></tr>
+    <tr><td>Become a preferred customer</td><td>7%</td></tr>
+    <tr><td>Pay with EZ-Cash card</td><td>2%</td></tr>
+  </table></div></div>`,
+  /* TEST 2 */
+  t2_receipt: `<div class="graphic-box"><div class="graphic-title">🧾 Receipt — Jay's Retail Outlet</div><div class="graphic-body"><table>
+    <tr><td>Jacket</td><td style="text-align:right">$24.00</td></tr>
+    <tr><td>Sweater</td><td style="text-align:right">$13.00</td></tr>
+    <tr><td>Scarf</td><td style="text-align:right">$32.00</td></tr>
+    <tr><td><u>T-shirt</u></td><td style="text-align:right"><u>$7.00</u></td></tr>
+    <tr class="total-row"><td>Total</td><td style="text-align:right">$76.00</td></tr>
+  </table></div></div>`,
+  t2_flowers: `<div class="graphic-box"><div class="graphic-title">🌸 Flowers — Price per Stem</div><div class="graphic-body"><table>
+    <tr><th>Flower Type</th><th style="text-align:right">Price</th></tr>
+    <tr><td>Lilies</td><td style="text-align:right">$4.50</td></tr>
+    <tr><td>Tulips</td><td style="text-align:right">$4.75</td></tr>
+    <tr><td>Roses</td><td style="text-align:right">$6.25</td></tr>
+    <tr><td>Orchids</td><td style="text-align:right">$8.00</td></tr>
+  </table></div></div>`,
+  t2_depart: `<div class="graphic-box"><div class="graphic-title">✈️ Departures</div><div class="graphic-body"><table>
+    <tr><th>Destination</th><th>Scheduled</th><th>Status</th></tr>
+    <tr><td>Barcelona</td><td>9:00 A.M.</td><td>40 min late</td></tr>
+    <tr><td>Lisbon</td><td>10:30 A.M.</td><td>On time</td></tr>
+    <tr><td>Madrid</td><td>11:00 A.M.</td><td>55 min late</td></tr>
+    <tr><td>Paris</td><td>11:20 A.M.</td><td>25 min late</td></tr>
+  </table></div></div>`,
+  /* TEST 3 */
+  t3_store: `<div class="graphic-box"><div class="graphic-title">🏬 Woodlands Store — Floor Directory</div><div class="graphic-body"><table>
+    <tr><th>Floor</th><th>Department</th></tr>
+    <tr><td>1</td><td>Customer Service</td></tr>
+    <tr><td>2</td><td>Jewelry</td></tr>
+    <tr><td>3</td><td>Furniture</td></tr>
+    <tr><td>4</td><td>Appliances</td></tr>
+    <tr><td>5</td><td>Clothing</td></tr>
+  </table></div></div>`,
+  t3_concert: `<div class="graphic-box"><div class="graphic-title">🎵 Concert Hall — Seating Map</div><div class="seating-wrap">
+    <svg viewBox="0 0 240 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="240" height="160" rx="8" fill="#F7F5F0"/>
+      <!-- stage -->
+      <rect x="55" y="128" width="130" height="22" rx="4" fill="#1A4731"/>
+      <text x="120" y="144" text-anchor="middle" font-size="11" fill="#fff" font-family="DM Sans,sans-serif" font-weight="500">Stage</text>
+      <!-- section 1 top center -->
+      <ellipse cx="120" cy="62" rx="42" ry="30" fill="#C0DD97" stroke="#3B6D11" stroke-width="1.2"/>
+      <text x="120" y="66" text-anchor="middle" font-size="13" fill="#27500A" font-family="DM Sans,sans-serif" font-weight="600">1</text>
+      <!-- section 2 right -->
+      <ellipse cx="200" cy="90" rx="28" ry="22" fill="#B5D4F4" stroke="#185FA5" stroke-width="1.2"/>
+      <text x="200" y="95" text-anchor="middle" font-size="13" fill="#0C447C" font-family="DM Sans,sans-serif" font-weight="600">2</text>
+      <!-- section 3 bottom center -->
+      <ellipse cx="120" cy="110" rx="35" ry="18" fill="#FAC775" stroke="#854F0B" stroke-width="1.2"/>
+      <text x="120" y="115" text-anchor="middle" font-size="13" fill="#633806" font-family="DM Sans,sans-serif" font-weight="600">3</text>
+      <!-- section 4 left -->
+      <ellipse cx="40" cy="90" rx="28" ry="22" fill="#F4C0D1" stroke="#993556" stroke-width="1.2"/>
+      <text x="40" y="95" text-anchor="middle" font-size="13" fill="#72243E" font-family="DM Sans,sans-serif" font-weight="600">4</text>
+    </svg>
+  </div></div>`,
+  t3_map: `<div class="graphic-box"><div class="graphic-title">🗺️ Proposed Stadium Sites</div><div class="map-grid">
+    <div class="map-cell"><div class="site-label">Site A</div><div class="site-name">Duncanville</div></div>
+    <div class="map-cell"><div class="site-label">Site B</div><div class="site-name">Princeford Creek</div></div>
+    <div class="map-cell"><div class="site-label">Site D</div><div class="site-name">Springfield</div></div>
+    <div class="map-cell" style="border-color:#DC2626;background:#FEF2F2;"><div class="site-label" style="color:#DC2626;">Site C</div><div class="site-name">Columbia City</div></div>
+  </div></div>`,
+};
+
+/* ── ALL QUESTIONS ──────────────────────────────────── */
+const ALL = [
+  /* ===== TEST 1 (Q32-70) ===== */
+  {t:1,n:32,q:"Where most likely are the speakers?",opts:["At an airport","At an office building","At a shopping center","At a hotel"],ans:3},
+  {t:1,n:33,q:"What was the woman unable to do this morning?",opts:["Open a door","Make photocopies","Find a taxi","Process a payment"],ans:0},
+  {t:1,n:34,q:"What does the woman like about the man's suggestion?",opts:["It accommodates her schedule.","It is affordable.","It will help increase sales.","It will reduce commuting time."],ans:0},
+  {t:1,n:35,q:"Where does the woman most likely work?",opts:["At a sports stadium","At a fitness center","At a doctor's office","At a library"],ans:1},
+  {t:1,n:36,q:"What does the man ask about?",opts:["A discount","A form","A business location","A parking policy"],ans:0},
+  {t:1,n:37,q:"What will the woman do next?",opts:["Post a sign","Confirm an account number","Provide a tour","Look at a schedule"],ans:2},
+  {t:1,n:38,q:"Who is the man?",opts:["A lawyer","An electrician","A dentist","A banker"],ans:2},
+  {t:1,n:39,q:"Why does the man apologize?",opts:["Some documents are missing.","Some equipment is not working.","An assistant is late.","A policy was not explained."],ans:3},
+  {t:1,n:40,q:"Why is Ms. Yamamoto asked to fill out a form?",opts:["To update her contact information","To set up a payment plan","To request some records","To opt for paperless statements"],ans:2},
+  {t:1,n:41,q:"Why did the man call?",opts:["To discuss an advertising strategy","To inquire about a loan","To request legal assistance","To update contact information"],ans:2},
+  {t:1,n:42,q:"What type of company is the man planning to purchase?",opts:["An accounting firm","A bookstore","A travel agency","A coffee shop"],ans:3},
+  {t:1,n:43,q:"Why does the man ask for an online meeting?",opts:["He will be out of town.","His car is not working.","Business hours are inconvenient.","A location is difficult to find."],ans:0},
+  {t:1,n:44,q:"What is the man concerned about?",opts:["Venue availability","Product efficiency","A project budget","A guest list"],ans:2},
+  {t:1,n:45,q:"Who is Stefan Vogel?",opts:["A furniture designer","A photographer","An accountant","An event planner"],ans:1},
+  {t:1,n:46,q:"What will the speakers do this afternoon?",opts:["Review some plans","Consult with a graphic designer","Choose some colors","Survey other team members"],ans:0},
+  {t:1,n:47,q:"What are the speakers discussing?",opts:["Some broken locks","Some missing equipment","A department purchase","A floor plan"],ans:0},
+  {t:1,n:48,q:"Which department does the man most likely work in?",opts:["Human Resources","Legal","Maintenance","Sales"],ans:2},
+  {t:1,n:49,q:'What does the woman imply when she says, "I was there this morning"?',opts:["A schedule will be revised.","A problem was not resolved.","An explanation is not necessary.","An appointment ended early."],ans:1},
+  {t:1,n:50,q:"What type of product are the speakers discussing?",opts:["Pencils","Backpacks","Sneakers","Folders"],ans:1},
+  {t:1,n:51,q:"What is the woman frustrated by?",opts:["Some customers wrote a negative review.","Some equipment is malfunctioning.","Some team members are unavailable.","Some packages have not arrived."],ans:2},
+  {t:1,n:52,q:'Why does the man say, "The school year is starting in three months"?',opts:["To request some time off from work","To correct an error in a schedule","To express interest in an assignment","To emphasize the need for urgency"],ans:3},
+  {t:1,n:53,q:"What does the man say about some contacts in China?",opts:["They submitted some preliminary results.","They requested help with a presentation.","They are celebrating a holiday.","They are coming to visit soon."],ans:2},
+  {t:1,n:54,q:'What does the woman imply when she says, "we didn\'t allocate funds for a project leader"?',opts:["She thinks a project deadline should be extended.","She is surprised by a suggestion.","A scheduled meeting should take place.","A project leader will not be hired."],ans:2},
+  {t:1,n:55,q:"What does the woman say about some travel expenses?",opts:["They are unnecessary.","They have been refunded.","They require receipts.","They were charged to the company credit card."],ans:0},
+  {t:1,n:56,q:'Why does the woman say, "It\'s not on Thursday"?',opts:["To indicate relief","To request an extension","To confirm availability","To express surprise"],ans:3},
+  {t:1,n:57,q:"What problem does the woman mention?",opts:["She cannot access some data.","She did not receive a travel reimbursement.","A client is unavailable.","Transportation is unreliable."],ans:0},
+  {t:1,n:58,q:"What does the man say he will do?",opts:["Check a reservation","Contact a coworker","Print out a form","Review a document"],ans:1},
+  {t:1,n:59,q:"Where does the woman work?",opts:["At a museum","At a movie theater","At a newspaper office","At a photography studio"],ans:0},
+  {t:1,n:60,q:"Who does the woman say she has hired?",opts:["An engineer","A musician","An interpreter","A scientist"],ans:2},
+  {t:1,n:61,q:"What problem does the man mention?",opts:["Traffic noise","Late deliveries","Uncomfortable seating","Inadequate lighting"],ans:3},
+  {t:1,n:62,q:"Why does the man apologize?",opts:["He lost a key.","He arrived late.","He turned off some equipment.","He forgot an instruction manual."],ans:1},
+  {t:1,n:63,q:"According to the woman, why will the speakers be very busy today?",opts:["The agency is offering a discount.","A new rental office is opening.","There is a conference in town.","A sporting event will take place."],ans:2},
+  {t:1,n:64,q:"Look at the graphic. Where will the man go first?",g:"t1_area",opts:["Area 1","Area 2","Area 3","Area 4"],ans:1},
+  {t:1,n:65,q:"Where does the conversation take place?",g:"t1_ticket",opts:["At a concert hall","At a museum","At a sports stadium","At a movie theater"],ans:1},
+  {t:1,n:66,q:"Look at the graphic. Why is the woman's ticket discounted?",g:"t1_ticket",opts:["It is a Monday.","It is after 5 P.M.","She is a student.","She is a member."],ans:0},
+  {t:1,n:67,q:"What will the woman most likely do next?",opts:["Select a meeting time","Eat at a café","Go on a tour","Attend a lecture"],ans:3},
+  {t:1,n:68,q:"Where does the conversation most likely take place?",g:"t1_shelby",opts:["At a café","At an electronics shop","At a stationery store","At a clothing store"],ans:0},
+  {t:1,n:69,q:"Look at the graphic. How much will the man save on his purchase?",g:"t1_shelby",opts:["5%","3%","7%","2%"],ans:3},
+  {t:1,n:70,q:"What does the man say he will do later today?",opts:["Call a business","Return some merchandise","Fill out an online survey","Hang up some posters"],ans:0},
+
+  /* ===== TEST 2 (Q32-70) ===== */
+  {t:2,n:32,q:"According to the woman, what will happen next week?",opts:["A renovation project will begin.","A company will move to a new location.","Some technology will be updated.","Some new employees will be trained."],ans:0},
+  {t:2,n:33,q:"What does the man recommend?",opts:["Ordering some equipment","Printing some instructions","Donating some furniture","Arranging a catered meal"],ans:2},
+  {t:2,n:34,q:"What does the woman say she will do?",opts:["Meet a client","Research some options","Make a presentation","Sign a contract"],ans:1},
+  {t:2,n:35,q:"Who most likely is the man?",opts:["A painter","A security guard","A bank teller","A property manager"],ans:3},
+  {t:2,n:36,q:"What problem does the woman have?",opts:["She found a mistake on a bill.","She cannot locate a door key.","An air conditioner is not working.","An apartment is too noisy."],ans:2},
+  {t:2,n:37,q:"What information does the man ask for?",opts:["An address","A security code","A telephone number","An appointment time"],ans:2},
+  {t:2,n:38,q:"Who most likely is the woman?",opts:["An event organizer","A marketing consultant","A department manager","A travel agent"],ans:2},
+  {t:2,n:39,q:"What did the man order for the woman?",opts:["A computer tablet","A credit card","Some furniture","Some office supplies"],ans:1},
+  {t:2,n:40,q:"What does the man suggest the woman do?",opts:["Save receipts","Return a handbook","E-mail a client","Consult with a supervisor"],ans:0},
+  {t:2,n:41,q:"What does the woman propose doing?",opts:["Hiring a computer technician","Using a training application","Replacing some printers","Changing business hours"],ans:1},
+  {t:2,n:42,q:"What is the man concerned about?",opts:["Scheduling delays","Employee satisfaction","The cost of a product","The quality of a product"],ans:2},
+  {t:2,n:43,q:"According to the woman, what can be found on a Web site?",opts:["A company address","Customer reviews","A chat feature","Discount coupons"],ans:1},
+  {t:2,n:44,q:"What does the woman want to discuss?",opts:["Job candidates","Vendor selections","Customer survey results","Computer system updates"],ans:2},
+  {t:2,n:45,q:"Why does the man say, \"The report's only half a page long\"?",opts:["To confirm some details","To express disappointment","To ask for another assignment","To refuse an offer"],ans:3},
+  {t:2,n:46,q:"What does the woman remind the man about?",opts:["Checking a social media account","Unpacking some equipment","Making a reservation","Going to a print shop"],ans:2},
+  {t:2,n:47,q:"What is the topic of the conversation?",opts:["A hiring initiative","A tax proposal","A volunteer opportunity","A community festival"],ans:1},
+  {t:2,n:48,q:"What is Ms. Haddad excited about?",opts:["Attracting international visitors","Increasing employment opportunities","Installing bicycle lanes","Improving a health-care facility"],ans:2},
+  {t:2,n:49,q:"What concern does the man point out?",opts:["Some equipment is missing.","A project may be understaffed.","Some safety guidelines are unclear.","Some parking spaces may be lost."],ans:3},
+  {t:2,n:50,q:"What did the woman recently review?",opts:["A sales report","An assembly line","Some online brochures","Some assembly directions"],ans:0},
+  {t:2,n:51,q:"What does the woman ask the man about?",opts:["Packaging additional shipments","Hiring temporary employees","Changing a deadline","Sending a press release"],ans:1},
+  {t:2,n:52,q:"What information will the man provide this afternoon?",opts:["Overtime schedules","Design improvements","Production costs","Inventory status"],ans:3},
+  {t:2,n:53,q:"What is the woman planning to do at two o'clock?",opts:["Go to the airport","Receive a shipment","Meet with a customer","Give a workshop"],ans:3},
+  {t:2,n:54,q:"What problem is the woman having?",opts:["Her log-in information has expired.","Her laptop cable does not work.","Her reservation was not confirmed.","Her mobile phone is missing."],ans:1},
+  {t:2,n:55,q:"What does the man tell the woman to do?",opts:["Search in her office","Visit an electronics store","Borrow some equipment","Contact a service team member"],ans:0},
+  {t:2,n:56,q:"Who most likely are the speakers?",opts:["Plumbers","Commercial architects","Road repair contractors","Landscapers"],ans:2},
+  {t:2,n:57,q:"Why will a project be rescheduled?",opts:["Rainy weather is expected.","A design requires revisions.","Some supplies have not arrived.","A crew member is not available."],ans:0},
+  {t:2,n:58,q:"What will the speakers most likely do on Monday?",opts:["Finalize a contract","Train some employees","Move some vehicles","Provide some consultations"],ans:3},
+  {t:2,n:59,q:"What field do the speakers most likely work in?",opts:["Education","Finance","Law","Medicine"],ans:3},
+  {t:2,n:60,q:"What does the woman mean when she says, \"I've presented at that conference before\"?",opts:["She has a lot of professional experience.","She dislikes giving presentations.","She understands the man's situation.","She has completed a requirement."],ans:2},
+  {t:2,n:61,q:"What do the speakers agree to do?",opts:["Temporarily close an office","Postpone hiring an employee","Work on a presentation together","Contact some clients"],ans:1},
+  {t:2,n:62,q:"Why does the man want to return an item?",g:"t2_receipt",opts:["It has a stain.","It has a tear.","It is the wrong color.","It is too large."],ans:0},
+  {t:2,n:63,q:"Look at the graphic. Which item does the man want to return?",g:"t2_receipt",opts:["The jacket","The sweater","The scarf","The T-shirt"],ans:2},
+  {t:2,n:64,q:"What does the woman offer to do for the man?",g:"t2_receipt",opts:["Issue a refund to his credit card","Set up an account for him","Consult with a manager","Call another branch store"],ans:0},
+  {t:2,n:65,q:"What type of event are the speakers discussing?",g:"t2_flowers",opts:["A retirement party","A wedding","A garden show","A grand opening"],ans:1},
+  {t:2,n:66,q:"According to the woman, what has caused a problem?",g:"t2_flowers",opts:["An invoice error","A rainstorm","A supply shortage","A reservation cancellation"],ans:2},
+  {t:2,n:67,q:"Look at the graphic. Which flowers will be used in the arrangements?",g:"t2_flowers",opts:["Lilies","Tulips","Roses","Orchids"],ans:1},
+  {t:2,n:68,q:"Look at the graphic. What is the status of the woman's flight?",g:"t2_depart",opts:["40 minutes late","On time","55 minutes late","25 minutes late"],ans:2},
+  {t:2,n:69,q:"What kind of company do the speakers work for?",g:"t2_depart",opts:["A fabric manufacturer","A clothing store","A travel agency","A newspaper publisher"],ans:0},
+  {t:2,n:70,q:"What does the man say he is going to do?",g:"t2_depart",opts:["Open another bank account","Extend business hours","Review a contract","Change a meeting time"],ans:3},
+
+  /* ===== TEST 3 (Q32-70) ===== */
+  {t:3,n:32,q:"What is the woman preparing for?",opts:["A move to a new city","A business trip","A building tour","A meeting with visiting colleagues"],ans:3},
+  {t:3,n:33,q:"Who most likely is the man?",opts:["An accountant","An administrative assistant","A marketing director","A company president"],ans:1},
+  {t:3,n:34,q:"What does the woman want to pick up on Friday morning?",opts:["A building map","A room key","An ID card","A parking pass"],ans:1},
+  {t:3,n:35,q:"Who most likely is the man?",opts:["A bank teller","A librarian","A mail carrier","A truck driver"],ans:1},
+  {t:3,n:36,q:"What does the woman ask about?",opts:["A method of payment","A type of delivery service","A way to fill out a form","A schedule change"],ans:0},
+  {t:3,n:37,q:"What does the man say he will do?",opts:["Look up some information","Print a document","Check on a machine","Update an account"],ans:2},
+  {t:3,n:38,q:"Why is the woman calling?",opts:["To update an address","To make a complaint","To renew a subscription","To inquire about employment"],ans:2},
+  {t:3,n:39,q:"Why does the man apologize?",opts:["A discount does not apply.","A service agreement has ended.","A business has closed.","A security procedure has changed."],ans:0},
+  {t:3,n:40,q:"What does the man say he will do?",opts:["Change a delivery time","Send a document","Speak with a supervisor","Provide a phone number"],ans:1},
+  {t:3,n:41,q:"What kind of business does the man most likely work for?",opts:["A legal consulting firm","An architecture firm","A film production company","A real estate agency"],ans:2},
+  {t:3,n:42,q:"What does the woman say she is concerned about?",opts:["The length of a project","The cost of an order","The opinion of the public","The skills of some workers"],ans:0},
+  {t:3,n:43,q:"What does the woman agree to let the man do?",opts:["Submit an application","Speak at a meeting","Review some books","Measure a space"],ans:1},
+  {t:3,n:44,q:"What are the speakers discussing?",opts:["A new product","A company merger","Cost estimates","Survey results"],ans:3},
+  {t:3,n:45,q:"According to the man, what is the main problem?",opts:["His team is unable to complete a project on time.","Some employees did not receive a salary increase.","There is too much noise in the office.","There are not enough parking spaces."],ans:2},
+  {t:3,n:46,q:"What does the woman suggest doing?",opts:["Reminding people about a company policy","Hiring some temporary staff","Moving to a different building","Speaking to the management team"],ans:0},
+  {t:3,n:47,q:"What does the speakers' company most likely sell?",opts:["Electronics","Clothing","Food","Automobiles"],ans:3},
+  {t:3,n:48,q:"Why is the woman surprised?",opts:["Some software is expensive.","A color is very bright.","The man has completed a report.","The man bought a new car."],ans:2},
+  {t:3,n:49,q:"Why does the woman say, \"The slides are available on our company intranet\"?",opts:["To request assistance reviewing a document","To recommend using a document as a reference","To report that a task has been completed","To indicate that a file is in the wrong location"],ans:1},
+  {t:3,n:50,q:"What did the woman win a prize for?",opts:["Having the highest sales numbers","Providing excellent customer service","Working at the company for ten years","Reducing costs on a project"],ans:0},
+  {t:3,n:51,q:"What will the woman do this weekend?",opts:["Visit a branch office","Attend a conference","Join a fitness club","Go on a vacation"],ans:3},
+  {t:3,n:52,q:"What does the woman say she will do with the prize?",opts:["Display it in her office","Exchange it at the store","Offer it to someone else","Use it at a later date"],ans:2},
+  {t:3,n:53,q:"What do the speakers find surprising about a restaurant?",opts:["Its prices","Its popularity","Its menu options","Its décor"],ans:1},
+  {t:3,n:54,q:"Why are the speakers in a hurry?",opts:["They need to catch a train.","They will be conducting an interview.","They will be leading a training session.","A business is about to close."],ans:2},
+  {t:3,n:55,q:"What will the speakers most likely do next?",opts:["Go to another restaurant","Try a free sample","Order food to go","Pay a bill"],ans:2},
+  {t:3,n:56,q:"What does the woman imply when she says, \"I don't have much to do\"?",opts:["She has time to help.","She plans to leave work early.","Her computer is not working.","She has not received an assignment."],ans:0},
+  {t:3,n:57,q:"What does the man notice about some medication?",opts:["It needs to be refrigerated.","It has expired.","The dosage has changed.","The supply is limited."],ans:3},
+  {t:3,n:58,q:"What does the man suggest doing in the future?",opts:["Installing some shelves","Confirming with a doctor","Increasing an order amount","Recommending a different medication"],ans:2},
+  {t:3,n:59,q:"Why is the woman at Regal Advertising?",opts:["For a photography session","For a client consultation","For a job interview","For a building opening"],ans:2},
+  {t:3,n:60,q:"What does the woman say is her specialty?",opts:["Researching international laws","Creating designs for billboards","Building a strong customer base","Finding cost-efficient business solutions"],ans:1},
+  {t:3,n:61,q:"What does the woman say she appreciates about Regal?",opts:["The company creates unique designs.","The company has offices overseas.","The company is dedicated to research.","The company values its employees."],ans:3},
+  {t:3,n:62,q:"Look at the graphic. Which floor will the man visit?",g:"t3_store",opts:["Floor 1","Floor 2","Floor 3","Floor 4"],ans:2},
+  {t:3,n:63,q:"Why is the man calling the store?",g:"t3_store",opts:["To complain about receiving a faulty product","To point out an error in an invoice","To ask about seeing some merchandise","To request delivery of a catalog"],ans:2},
+  {t:3,n:64,q:"What does the woman assure the man about?",g:"t3_store",opts:["An online payment system is secure.","A building is wheelchair accessible.","A product is eligible for a refund.","A food court is open daily."],ans:1},
+  {t:3,n:65,q:"Why is the man surprised?",g:"t3_concert",opts:["A popular band is coming to town.","The woman plays a musical instrument.","The woman was able to get concert tickets.","Some musicians scheduled a second concert."],ans:2},
+  {t:3,n:66,q:"Look at the graphic. In which section does the woman have seats?",g:"t3_concert",opts:["Section 1","Section 2","Section 3","Section 4"],ans:2},
+  {t:3,n:67,q:"What is the woman doing this weekend?",g:"t3_concert",opts:["Practicing with her band","Entering a radio contest","Moving to Boston","Attending a party"],ans:3},
+  {t:3,n:68,q:"Who most likely are the speakers?",g:"t3_map",opts:["Architects","Government officials","News reporters","Contractors"],ans:2},
+  {t:3,n:69,q:"What does the woman say she had access to?",g:"t3_map",opts:["Uniform designs","Sporting event tickets","A company vehicle","Bid proposals"],ans:3},
+  {t:3,n:70,q:"Look at the graphic. According to the woman, where will a stadium most likely be located?",g:"t3_map",opts:["At site A","At site B","At site C","At site D"],ans:2},
+];
+
+const TAG_CLASS = {1:'tag-t1',2:'tag-t2',3:'tag-t3'};
+const TAG_LABEL = {1:'Test 1',2:'Test 2',3:'Test 3'};
+
+let filter='all', mode='seq', order=[], idx=0, correct=0, wrong=0, answered=false, wrongList=[], isReview=false;
+
+function filteredIndices(){
+  if(filter==='all') return ALL.map((_,i)=>i);
+  return ALL.map((_,i)=>i).filter(i=>ALL[i].t===+filter);
+}
+
+function setFilter(f){
+  filter=f;
+  ['all','1','2','3'].forEach(x=>{
+    document.getElementById('f-'+x).className='fbtn'+(f===x?' active':'');
+  });
+  restart();
+}
+function setMode(m){
+  mode=m;
+  document.getElementById('m-seq').className='mbtn'+(m==='seq'?' active':'');
+  document.getElementById('m-rand').className='mbtn'+(m==='rand'?' active':'');
+  restart();
+}
+
+function restart(){
+  isReview=false; wrongList=[]; correct=0; wrong=0; idx=0;
+  order=filteredIndices();
+  if(mode==='rand') order.sort(()=>Math.random()-0.5);
+  document.getElementById('result-area').style.display='none';
+  document.getElementById('quiz-area').style.display='block';
+  updateStats(); renderQ();
+}
+function reviewWrong(){
+  if(!wrongList.length) return;
+  isReview=true; order=[...wrongList]; wrongList=[]; correct=0; wrong=0; idx=0;
+  document.getElementById('result-area').style.display='none';
+  document.getElementById('quiz-area').style.display='block';
+  updateStats(); renderQ();
+}
+function updateStats(){
+  const total=order.length;
+  document.getElementById('h-qnum').textContent=(idx+1)+'/'+total;
+  document.getElementById('h-correct').textContent=correct;
+  document.getElementById('h-wrong').textContent=wrong;
+  document.getElementById('prog-fill').style.width=((idx+1)/total*100)+'%';
+}
+function renderQ(){
+  answered=false;
+  const q=ALL[order[idx]];
+  updateStats();
+  const tag=document.getElementById('q-tag');
+  tag.textContent=TAG_LABEL[q.t];
+  tag.className='q-test-tag '+TAG_CLASS[q.t];
+  document.getElementById('q-num').textContent='Q'+q.n;
+  document.getElementById('q-text').textContent=q.q;
+  document.getElementById('graphic-area').innerHTML=q.g?GFX[q.g]:'';
+  const fb=document.getElementById('feedback');
+  fb.className='feedback'; fb.textContent='';
+  document.getElementById('skip-btn').style.display='inline-block';
+  document.getElementById('skip-hint').style.display='block';
+  document.getElementById('next-btn').style.display='none';
+  const labels=['A','B','C','D'];
+  const optDiv=document.getElementById('options');
+  optDiv.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const d=document.createElement('div');
+    d.className='opt';
+    d.innerHTML=`<div class="opt-key">${labels[i]}</div><div class="opt-text">${o}</div>`;
+    d.onclick=()=>pick(i,d,q);
+    optDiv.appendChild(d);
+  });
+  const card=document.getElementById('q-card');
+  card.style.animation='none'; void card.offsetWidth; card.style.animation='slideIn 0.25s ease';
+}
+function pick(i,el,q){
+  if(answered) return;
+  answered=true;
+  document.querySelectorAll('.opt').forEach(o=>o.classList.add('locked'));
+  const fb=document.getElementById('feedback');
+  if(i===q.ans){
+    el.classList.add('correct'); correct++;
+    fb.textContent='✓ Chính xác!'; fb.className='feedback show ok';
+  } else {
+    el.classList.add('wrong');
+    document.querySelectorAll('.opt')[q.ans].classList.add('correct');
+    wrong++;
+    if(!wrongList.includes(order[idx])) wrongList.push(order[idx]);
+    fb.textContent='✗ Đáp án đúng: '+['A','B','C','D'][q.ans]+'. '+q.opts[q.ans];
+    fb.className='feedback show bad';
+  }
+  document.getElementById('h-correct').textContent=correct;
+  document.getElementById('h-wrong').textContent=wrong;
+  document.getElementById('skip-btn').style.display='none';
+  document.getElementById('skip-hint').style.display='none';
+  document.getElementById('next-btn').style.display='inline-block';
+}
+function nextQ(){
+  if(!answered){ if(!wrongList.includes(order[idx])) wrongList.push(order[idx]); wrong++; document.getElementById('h-wrong').textContent=wrong; }
+  idx++;
+  if(idx>=order.length){ showResult(); return; }
+  renderQ();
+}
+function showResult(){
+  document.getElementById('quiz-area').style.display='none';
+  document.getElementById('result-area').style.display='block';
+  const total=order.length, pct=Math.round(correct/total*100);
+  document.getElementById('r-score').textContent=correct;
+  document.getElementById('r-total').textContent='/'+total;
+  document.getElementById('r-cor').textContent=correct;
+  document.getElementById('r-wrg').textContent=wrong;
+  document.getElementById('r-pct').textContent=pct+'%';
+  document.getElementById('r-title').textContent=pct>=85?'🎉 Xuất sắc!':pct>=70?'👍 Tốt lắm!':pct>=50?'📖 Cần cố thêm':'💪 Ôn kỹ lại nhé!';
+  document.getElementById('r-msg').textContent=pct>=85?'Nắm vững Part 3 rồi, tiếp tục giữ phong độ!':pct>=70?'Kết quả tốt! Luyện thêm vài lần nữa là vững.':pct>=50?'Tập trung vào câu inference và implication nhé.':'Ôn lại từng test một trước, rồi trộn sau.';
+  document.getElementById('review-btn').style.display=wrongList.length?'inline-block':'none';
+  document.getElementById('prog-fill').style.width='100%';
+}
+restart();
+</script>
+</body>
+</html>
